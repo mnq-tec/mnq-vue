@@ -13,10 +13,10 @@
 <div id="app" style="margin-left: 300px;">
     <p v-bind:class="className" v-bind:title="title">危险勿触</p>
     <button v-bind:disabled="10 + 10 === 20">点击有奖</button>
-    <input v-bind:type="'text'" v-bind::placeholder="true ? '请输入' : '请录入'">
+    <input v-bind::placeholder="true ? '请输入' : '请录入'" v-bind:type="'text'">
     <p :class="className" :title="title">危险勿触</p>
     <button :disabled="10 + 10 === 20">点击有奖</button>
-    <input :type="'text'" :placeholder="true ? '请输入' : '请录入'">
+    <input :placeholder="true ? '请输入' : '请录入'" :type="'text'">
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
 <script type="text/javascript">
