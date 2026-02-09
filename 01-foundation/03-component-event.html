@@ -9,39 +9,28 @@
 </head>
 <body>
 <div id="app">
-    <div>{{count}}</div>
-    <my-alert>
-
-    </my-alert>
-    <my-alert>
-
-    </my-alert>
+    <my-alert title="按钮1" @my-click="myFunc"></my-alert>
+    <my-alert title="按钮2" @my-click="myFunc"></my-alert>
 </div>
 </body>
 <script type="text/javascript">
+
     const {createApp, ref} = Vue
 
-
     const alertComponent = {
-        setup() {
-            const msg = '警告框提示';
-            const count = ref(0);
-
-            function click() {
-                alert(msg + count.value++);
-            }
-
-            return {msg, count, click};
-        },
+        props: ['title'],
         template: `
           <div>
-            <button @click="click">按钮</button>
+            <button @click="$emit('my-click',title)">{{ title }}</button>
           </div>`
     }
 
     const config = {
         setup() {
-            return {}
+            const myFunc = (params) => {
+                alert("调用父组件中的方法:" + params);
+            }
+            return {myFunc}
         }
     }
 

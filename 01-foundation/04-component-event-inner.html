@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-alert title="按钮1" @my-click="myFunc"></my-alert>
+    <my-alert title="按钮2" @my-click="myFunc"></my-alert>
+</div>
+</body>
+<script type="text/javascript">
+
+    const {createApp, ref} = Vue
+
+    const alertComponent = {
+        props: ['title'],
+        emits: ['my-click'],//组件的事件必须显示声明
+        setup(props, context) {
+            const innerClick = () => {
+                console.log('组件内部的逻辑');
+                context.emit('my-click',props.title);//emit方法可以触发组件事件
+            }
+            return {innerClick}
+        },
+        template: `
+          <div>
+            <button @click="innerClick">{{ title }}</button>
+          </div>`
+    }
+
+    const config = {
+        setup() {
+            const myFunc = (params) => {
+                alert("调用父组件中的方法:" + params);
+            }
+            return {myFunc}
+        }
+    }
+
+    let app = createApp(config);
+    app.component('my-alert', alertComponent);
+    app.mount("#app");
+</script>
+</html>

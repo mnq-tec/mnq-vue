@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-alert title="按钮1"></my-alert>
+    <my-alert title="按钮2"></my-alert>
+</div>
+</body>
+<script type="text/javascript">
+
+    const {createApp, ref} = Vue
+
+    const alertComponent = {
+        props: ['title'],
+        //外部属性可以作为setup的第一个参数传入
+        setup(props) {
+            const msg = '警告框提示';
+            const count = ref(0);
+
+            function click() {
+                //setup 中访问外部参数
+                alert(props.title + msg + count.value++);
+            }
+
+            return {msg, count, click};
+        },
+        template: `
+          <div>
+            <button @click="click">{{ title }}</button>
+          </div>`
+    }
+
+    const config = {
+        setup() {
+            return {}
+        }
+    }
+
+    let app = createApp(config);
+    app.component('my-alert', alertComponent);
+    app.mount("#app");
+</script>
+</html>
