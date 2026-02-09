@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--下面这个my-input组件会被展开为:
+    <my-input :modelValue="inputText" @update:modelValue="value => inputText =value"></my-input>
+    -->
+    <my-input v-model="inputText"></my-input>
+    <div>{{inputText}}</div>
+</div>
+</body>
+<script type="text/javascript">
+    const {createApp, ref} = Vue
+
+    const config = {
+        setup() {
+            const inputText = ref('');
+            return {inputText};
+        }
+    }
+
+    const inputComponent = {
+        props: ['modelValue'],
+        emits: ['update:modelValue'],
+        setup(props, ctx) {
+            const action = (event) => {
+                ctx.emit("update:modelValue", event.target.value);
+            }
+            return {action};
+        },
+        template: `
+          <div><span>输入框:</span><input :value="modelValue" @input="action"></div>
+        `
+    }
+    let app = createApp(config);
+    app.component("my-input", inputComponent);
+    app.mount("#app");
+</script>
+</html>
