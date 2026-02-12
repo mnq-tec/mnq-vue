@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="radio" value="page1" v-model="page"/> 页面1
+    <input type="radio" value="page2" v-model="page"/> 页面2
+    <!--component 通过is属性来指定要渲染的组件名称-->
+    <component :is="page"></component>
+</div>
+</body>
+<script type="text/javascript">
+    const {createApp, ref} = Vue
+
+    const config = {
+        setup() {
+            const page = ref('page1');
+            return {page}
+        }
+    }
+
+    const comp_page1 = {
+        template: `
+        <div style="color: red">
+        页面组件1
+        </div>
+        `
+    }
+
+    const comp_page2 = {
+        template: `
+        <div style="color: blue">
+        页面组件2
+        </div>
+        `
+    }
+
+    let app = createApp(config);
+    app.component('page1', comp_page1);
+    app.component('page2', comp_page2);
+    app.mount("#app");
+</script>
+</html>

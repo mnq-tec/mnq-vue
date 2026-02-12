@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声明周期</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+</div>
+</body>
+<script type="text/javascript">
+    const {createApp, ref} = Vue
+
+    const comp={
+        setup(){
+            console.log("组件创建前");
+            Vue.onBeforeMount(()=>{
+                console.log("组件挂载前");
+            });
+            Vue.onMounted(()=>{
+                console.log("组件挂载完成");
+            });
+            Vue.onBoforeUpdate(()=>{
+                console.log("组件更新前");
+            });
+            Vue.onUpdated(()=>{
+                console.log("组件更新完成");
+            });
+            Vue.onActivated(()=>{
+                console.log("被缓存的组件激活时调用");
+            });
+            Vue.onDeactivated(()=>{
+                console.log("被缓存的组件停用时调用")
+            });
+            Vue.onBeforeUnmount(()=>{
+                console.log("组件卸载前调用");
+            });
+            Vue.onUnmounted(()=>{
+                console.log("组件卸载后调用");
+            });
+        }
+    };
+
+    let app=createApp(config)
+        .mount("#app");
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-comp>组件内部</my-comp>
+    <my-comp2>
+        <template #header>
+            Header
+        </template>
+        <template #main>
+            Main
+        </template>
+        <template #footer>
+            Footer
+        </template>
+    </my-comp2>
+</div>
+</body>
+<script type="text/javascript">
+    const {createApp, ref} = Vue
+
+    const myComponent = {
+        template: `
+            <div style="border-style: solid;border-width: 10px;border-color: red">
+                <slot>插槽的默认内容</slot>
+            </div>
+        `
+    };
+
+    const myComponent2 = {
+        template: `
+            <div style="border-style: solid;border-width: 10px;border-color: red">
+                <slot name="header"></slot>
+                <hr/>
+                <slot name="main"></slot>
+                <hr/>
+                <slot name="footer"></slot>
+            </div>
+        `
+    }
+
+    const config = {
+        setup() {
+            return {}
+        }
+    }
+
+    let app=createApp(config);
+    app.component('my-comp',myComponent);
+    app.component('my-comp2',myComponent2);
+    app.mount("#app");
+</script>
+</html>
