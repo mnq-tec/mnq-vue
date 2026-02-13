@@ -9,43 +9,81 @@
 </head>
 <body>
 <div id="app">
+    <!--我们使用v-if指令来控制子组件的渲染，当渲染状态切换时，组件会相应地进行挂载和卸载操作。-->
+    <life v-if="show">
+        {{ content }}
+    </life>
+    <button @click="changeShow">
+        change
+    </button>
 </div>
 </body>
 <script type="text/javascript">
     const {createApp, ref} = Vue
 
-    const comp={
-        setup(){
+    const comp = {
+        setup() {
             console.log("组件创建前");
-            Vue.onBeforeMount(()=>{
+            Vue.onBeforeMount(() => {
                 console.log("组件挂载前");
             });
-            Vue.onMounted(()=>{
+            Vue.onMounted(() => {
                 console.log("组件挂载完成");
             });
-            Vue.onBoforeUpdate(()=>{
+            Vue.onBeforeUpdate(() => {
                 console.log("组件更新前");
             });
-            Vue.onUpdated(()=>{
+            Vue.onUpdated(() => {
                 console.log("组件更新完成");
             });
-            Vue.onActivated(()=>{
+            Vue.onActivated(() => {
                 console.log("被缓存的组件激活时调用");
             });
-            Vue.onDeactivated(()=>{
+            Vue.onDeactivated(() => {
                 console.log("被缓存的组件停用时调用")
             });
-            Vue.onBeforeUnmount(()=>{
+            Vue.onBeforeUnmount(() => {
                 console.log("组件卸载前调用");
             });
-            Vue.onUnmounted(()=>{
+            Vue.onUnmounted(() => {
                 console.log("组件卸载后调用");
             });
+            Vue.onErrorCaptured(() => {
+                console.log("捕获到来自子组件的异常时调用");
+            });
+            Vue.onRenderTracked(() => {
+                console.log("虚拟DOM被重新渲染时调用");
+            });
+            Vue.onRenderTriggered(() => {
+                console.log("虚拟DOM渲染时调用")
+            });
+            console.log("组件创建完成");
+        },
+        template: `
+          <div>
+            <slot></slot>
+          </div>
+        `
+    };
+
+    const config = {
+        setup() {
+            const show = ref(true);
+            const content = ref(0);
+
+            function changeShow() {
+                //show.value = !show.value;
+                content.value++;
+            }
+
+            return {show, content, changeShow};
         }
     };
 
-    let app=createApp(config)
-        .mount("#app");
+    let app = createApp(config);
+    app.component("life", comp);
+    app.mount("#app");
+
 
 </script>
 </html>

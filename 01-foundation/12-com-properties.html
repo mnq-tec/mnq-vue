@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<body>
+<div id="app">
+    <!--在外部传递数值类型的数据到组件内部时，必须使用v-bind指令的方式进行传递，
+    直接使用HTML属性设置的方式会将传递的数据作为字符串传递（而不是JavaScript表达式)-->
+    <com1 :count="5"></com1>
+</div>
+
+<script type="text/javascript">
+    const {createApp, ref, computed} = Vue;
+
+    const com1 = {
+        props: ["count"],
+        setup(props) {
+            const thisCount = ref(0);
+            const click = () => {
+                thisCount.value++;
+            }
+            const innerCount = computed(() => {
+                return thisCount.value + props.count;
+            });
+            return {thisCount, innerCount, click};
+        },
+        template: `
+          <div>
+            <button @click="click"> click</button>
+            {{ innerCount }}
+          </div>
+        `
+    }
+    const app = createApp({});
+    app.component("com1", com1);
+    app.mount("#app");
+</script>
+</body>
+</html>

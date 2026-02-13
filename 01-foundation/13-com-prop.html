@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<body>
+<div id="app">
+    <pro-component :count="11"></pro-component>
+</div>
+<script type="text/javascript">
+    const {createApp, ref, computed} = Vue;
+    const App = createApp({});
+    const propCom = {
+        props: {
+            count: {
+                validator: function (value) {
+                    return !(typeof (value) != 'number' || value <= 10);
+
+                }
+            }
+        },
+        setup(props) {
+            const {count} = props;
+            const thisCount = ref(count);
+            const click = () => {
+                thisCount.value++;
+            }
+            const innerCount = computed(() => {
+                return count.value + thisCount.value;
+            })
+            return {count, thisCount, innerCount, click};
+        },
+        template: `
+          <button @click="click">Click me!</button>
+          <div>计数:{{ innerCount }}</div>
+        `
+    };
+
+    App.component("pro-component", propCom);
+    App.mount("#app");
+</script>
+</body>
+</html>

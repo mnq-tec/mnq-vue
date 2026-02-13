@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<body>
+<div id="app">
+    <com1></com1>
+</div>
+
+<script type="text/javascript">
+    const app = Vue.createApp({});
+    app.config.globalProperties={
+        "version": "1.0.0",
+    };
+
+    const com1={
+        setup(){
+            const instance=Vue.getCurrentInstance();
+            const version = instance.appContext.config.globalProperties.version;
+
+            Vue.onMounted(()=>{
+               console.log(version);
+            });
+        },
+        template:`
+            <div></div>
+        `
+    }
+    app.component("com1",com1);
+    app.mount("#app");
+
+</script>
+</body>
+</html>
