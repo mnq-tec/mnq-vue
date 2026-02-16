@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin</title>
+</head>
+<script src="../lib/vue.global.js"></script>
+<body>
+<div id="app">
+    <input type="text" v-getfocus/>
+</div>
+<script type="text/javascript">
+    const {createApp, ref} = Vue;
+    const App = createApp({});
+    App.directive('getfocus', {
+        //当被绑定此指令的元素挂载时调用
+        //在自定义指令时，通常需要在组件的一些生命周期节点进行操作。
+        // 自定义指令除支持mounted生命周期方法外，还支持使用beforeMount
+        // 、beforeUpdate、updated、beforeUnmount和unmounted生命周期方法
+        // ，我们可以选择合适的时机来实现自定义指令的逻辑。
+        mounted (element) {
+            element.focus();
+            console.log("组件获得了焦点");
+        }
+    });
+    App.mount("#app");
+</script>
+</body>
+</html>

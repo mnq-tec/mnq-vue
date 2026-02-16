@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin</title>
+</head>
+<script src="../lib/vue.global.js"></script>
+<body>
+<div id="app">
+</div>
+<script type="text/javascript">
+
+    const {createApp, ref} = Vue
+    const mixins = {
+        data() {
+            return {
+                a: "a",
+                b: "b",
+                c: "c",
+                d: "d"
+            }
+        }
+    }
+
+    const config = {
+        mixins: [mixins],
+        setup() {
+            return {
+                d: "D"//组件内的值会覆盖mixin进来的外部的值
+            }
+        },
+        created() {
+            console.log(this.a, this.b, this.c, this.d);
+        }
+    }
+
+    const App = createApp(config);
+    App.mount("#app");
+</script>
+</body>
+</html>

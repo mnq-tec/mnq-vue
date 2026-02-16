@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../lib/vue.global.js"></script>
+<body>
+<div id="app">
+    <my-list :count="5"></my-list>
+</div>
+<script type="text/javascript">
+    const {createApp, ref, computed} = Vue
+    const App = createApp({});
+    const listCom = {
+        props: {
+            count: Number
+        },
+        template: `
+          <div style="border:red solid 10px">
+            <my-item v-for="i in this.count" :list-count="this.count" :index="i">
+
+            </my-item>
+          </div>
+        `,
+    };
+
+    const itemCom = {
+        props: {
+            listCount: Number,
+            index: Number
+        },
+        template: `
+          <div style="border:blue solid 10px">
+            <my-label :list-count="this.listCount" :index="this.index">
+
+            </my-label>
+          </div>`
+    }
+
+    const labelCom = {
+        props: {
+            listCount: Number,
+            index: Number
+        },
+        template: `
+          <div>{{ this.index }}/{{ this.listCount }}</div>
+        `
+    }
+
+    App.component("my-label", labelCom);
+    App.component("my-item", itemCom);
+    App.component("my-list", listCom);
+    App.mount("#app");
+</script>
+</body>
+</html>

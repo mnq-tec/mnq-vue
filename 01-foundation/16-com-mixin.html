@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin</title>
+</head>
+<script src="../lib/vue.global.js"></script>
+<body>
+<div id="app">
+    <com1 title="com1"></com1>
+    <com2 title="com2"></com2>
+    <com3 title="com3"></com3>
+</div>
+<script type="text/javascript">
+
+    const {createApp, ref} = Vue
+    const mixins = {
+        props: ["title"]
+    }
+
+    const com1 = {
+        mixins: [mixins],
+        template: `
+          <div style="border:red solid 2px">
+            {{ title }}
+          </div>
+        `
+    }
+
+    const com2 = {
+        mixins: [mixins],
+        template: `
+          <div style="border:blue solid 2px">
+            {{ title }}
+          </div>
+        `
+    }
+
+    const com3 = {
+        mixins: [mixins],
+        template: `
+          <div style="border:green solid 2px">
+            {{ title }}
+          </div>
+        `
+    }
+
+    const App = createApp({});
+    App.component("com1", com1);
+    App.component("com2", com2);
+    App.component("com3", com3);
+    App.mount("#app");
+</script>
+</body>
+</html>

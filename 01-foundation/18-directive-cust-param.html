@@ -1,0 +1,28 @@
+<script setup>
+</script>
+<script setup>
+</script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin</title>
+</head>
+<script src="../lib/vue.global.js"></script>
+<body>
+<div id="app">
+    <!--属性可以传对象可以传字符串-->
+    <input type="text" v-getfocus:custom="{a:1, b:2}"/>
+</div>
+<script type="text/javascript">
+    const {createApp, ref} = Vue;
+    const App = createApp({});
+    App.directive('getfocus', {
+        mounted(element, param) {
+            element.focus();
+            console.log("组件获得了焦点:" + param.value.a);
+        }
+    });
+    App.mount("#app");
+</script>
+</body>
+</html>
