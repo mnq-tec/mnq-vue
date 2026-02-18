@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>响应式变量</title>
+    <script src="../lib/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+
+</div>
+<!--a、b的值变更后,c的值不会变更-->
+<!--<script>
+    let a = 2;
+    let b = 3;
+    let c = a + b;
+    console.log(c);
+    a = 3;
+    b = 4;
+    console.log(c);
+</script>-->
+
+<script>
+    let a = {
+        value: 3
+    }
+    let b = {
+        value: 2
+    }
+
+    let trigger = null;
+
+    let handleA = {
+        set(target, key, value) {
+            target[key] = value;
+            if (trigger) {
+                trigger();
+            }
+            console.log(`设置A的属性${key}=${value}`);
+        },
+        get(target, key) {
+            console.log(`获取A的属性${key}`);
+            return target[key];
+        }
+    }
+
+    let handleB = {
+        set(target, key, value) {
+            target[key] = value;
+            if (trigger) {
+                trigger();
+            }
+            console.log(`设置B的属性${key}=${value}`);
+        },
+        get(target, key) {
+            console.log(`获取B的属性${key}`);
+            return target[key];
+        }
+    }
+
+    let sum = 0;
+    trigger = () => {
+        sum = a.value + b.value;
+    }
+    trigger();
+    console.log("sum is " + sum)
+
+    let pa = new Proxy(a, handleA);
+    let pb = new Proxy(b, handleB);
+
+    pa.value = 5;
+    pb.value = 6;
+
+    console.log("sum is " + sum);
+
+
+</script>
+</body>
+</html>

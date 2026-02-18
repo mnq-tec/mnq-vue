@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>响应式对象</title>
+    <script src="../lib/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="changeA">changeA</button>
+    {{a}}
+    <br/>
+    <button @click="changeB">changeB</button>
+    {{b}}
+    <br/>
+    <button @click="changeC">changeC</button>
+    {{c.value}}
+    <br/>
+    <button @click="changeD">changeD</button>
+    {{d.value}}
+</div>
+<script>
+    const {createApp, ref, reactive} = Vue;
+
+    const config = {
+        setup() {
+            let a = 3;
+            let b = ref(4);
+            let c = {value: 7};
+            let d = reactive({value: 7});
+
+            const changeA = () => {
+                a++;
+            }
+            const changeB = () => {
+                b.value++;
+            }
+            const changeC = () => {
+                c.value++;
+            }
+            const changeD = () => {
+                d.value++;
+            }
+
+            return {a, b, c, d, changeA, changeB, changeC, changeD};
+        }
+    }
+    createApp(config).mount("#app");
+</script>
+</body>
+</html>
